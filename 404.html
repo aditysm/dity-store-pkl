@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mengarahkan ke Formulir Pemesanan...</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f9fafb;
+      color: #111827;
+    }
+    .card {
+      text-align: center;
+      padding: 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+    }
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #2563eb;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1.5rem auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="spinner"></div>
+    <p>Mengarahkan Anda ke formulir pemesanan laporan PKL...</p>
+    <p style="font-size: 0.875rem; color: #6b7280;">Jika tidak beralih secara otomatis, <a id="manual-link" href="#">klik di sini</a>.</p>
+  </div>
+
+  <script>
+    // URL Dasar Google Form (tanpa parameter prefilled)
+    const BASE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdh1VcxDLf7biWdO--_53vgwtpVZdqg_2qb6iWftH8MZrd6CA/viewform";
+    
+    // ID parameter entry untuk pilihan jenis layanan
+    const ENTRY_ID = "entry.1597788801";
+
+    // Ambil path URL saat ini (diubah ke huruf kecil agar fleksibel)
+    const path = window.location.pathname.toLowerCase().replace(/\/$/, "");
+
+    let targetUrl = BASE_FORM_URL;
+
+    // Mapping path URL ke opsi layanan
+    if (path === "/pkl1") {
+      // Buat dari nol
+      targetUrl = `${BASE_FORM_URL}?usp=pp_url&${ENTRY_ID}=Buat+dari+Nol`;
+    } else if (path === "/pkl2") {
+      // Edit / Melanjutkan (Setengah Jadi)
+      targetUrl = `${BASE_FORM_URL}?usp=pp_url&${ENTRY_ID}=Edit+/+Melanjutkan+(Setengah+Jadi)`;
+    } else if (path === "/pkl3") {
+      // Konversi ke PPTX (Bahan dari Laporan yang Sudah Ada)
+      targetUrl = `${BASE_FORM_URL}?usp=pp_url&${ENTRY_ID}=Konversi+ke+PPTX+(Bahan+dari+Laporan+yang+Sudah+Ada)`;
+    } else if (path === "/pkl4") {
+      // Buat dari Nol + PPTX Presentasi
+      targetUrl = `${BASE_FORM_URL}?usp=pp_url&${ENTRY_ID}=Buat+dari+Nol+++PPTX+Presentasi`;
+    } else if (path === "/pkl") {
+      // Form kosong tanpa prefilled
+      targetUrl = BASE_FORM_URL;
+    }
+
+    // Pasang URL ke tautan manual fallback
+    document.getElementById("manual-link").href = targetUrl;
+
+    // Eksekusi pengalihan otomatis
+    window.location.href = targetUrl;
+  </script>
+</body>
+</html>
